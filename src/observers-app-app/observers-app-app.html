@@ -1,0 +1,53 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="observers-app-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    
+    <h2>My name is [[nameBinding]]. I'm [[ageBinding]] years old.</h2>
+  </template>
+
+  <script>/**
+ * @customElement
+ * @polymer
+ */
+class ObserversAppApp extends Polymer.Element {
+  static get is() {
+    return 'observers-app-app';
+  }
+
+  static get properties() {
+    return {
+      people: {
+        type: Object,
+        value: {
+          name: "Joinson",
+          age: 32
+        }
+      }
+    };
+  }
+
+  static get observers() {
+    return ['_statusChangedValue(people.*)'];
+  } //Observers Method
+
+
+  _statusChangedValue(changeRecord) {
+    if (changeRecord.value.name == this.people.name) {
+      this.nameBinding = this.people.name;
+    }
+
+    if (changeRecord.value.age == this.people.age) {
+      this.ageBinding = this.people.age;
+    }
+  }
+
+}
+
+window.customElements.define(ObserversAppApp.is, ObserversAppApp);</script>
+</dom-module>
